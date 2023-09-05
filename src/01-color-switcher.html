@@ -9,25 +9,35 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 100vh;
+        min-height: 100vh;
         margin: 0;
         background-color: #f0f0f0;
+        padding: 20px;
+      }
+
+      .button-container {
+        text-align: center;
       }
 
       button {
         font-size: 18px;
         padding: 10px 20px;
-        margin-right: 10px;
+        margin: 10px;
       }
 
-      button:last-child {
-        margin-right: 0;
+      a {
+        position: absolute;
+        top: 10px;
+        left: 10px;
       }
     </style>
   </head>
   <body>
-    <button type="button" data-start id="startButton">Start</button>
-    <button type="button" data-stop id="stopButton" disabled>Stop</button>
+    <a href="index.html">Go back</a>
+    <div class="button-container">
+      <button type="button" data-start id="startButton">Start</button>
+      <button type="button" data-stop id="stopButton" disabled>Stop</button>
+    </div>
 
     <script src="js/01-color-switcher.js" type="module"></script>
   </body>
