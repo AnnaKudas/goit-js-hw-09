@@ -1,5 +1,5 @@
-import flatpickr from "flatpickr";
-import "flatpickr/dist/flatpickr.min.css";
+import flatpickr from 'flatpickr';
+import 'flatpickr/dist/flatpickr.min.css';
 
 function convertMs(ms) {
   const second = 1000;
@@ -26,6 +26,8 @@ const hoursValue = document.querySelector('[data-hours]');
 const minutesValue = document.querySelector('[data-minutes]');
 const secondsValue = document.querySelector('[data-seconds]');
 
+startButton.disabled = true;
+
 let countdownInterval;
 
 let options = {
@@ -48,11 +50,13 @@ let options = {
       startButton.disabled = false;
     }
   },
-}
+};
 
-flatpickr("#datetime-picker", options);
+flatpickr('#datetime-picker', options);
 
 startButton.addEventListener('click', () => {
+  startButton.disabled = true;
+  datetimePicker.disabled = true;
   const selectedDate = new Date(datetimePicker.value);
   const currentDate = new Date();
   const timeRemaining = selectedDate - currentDate;
@@ -65,17 +69,22 @@ startButton.addEventListener('click', () => {
   countdownInterval = setInterval(() => {
     const currentDate = new Date();
     const timeRemaining = selectedDate - currentDate;
-    const time = convertMs(timeRemaining);
-    daysValue.textContent = addLeadingZero(time.days);
-    hoursValue.textContent = addLeadingZero(time.hours);
-    minutesValue.textContent = addLeadingZero(time.minutes);
-    secondsValue.textContent = addLeadingZero(time.seconds);
-
-    timeRemaining -= 1000;
-
-    if (timeRemaining <= 0) {
+    if (timeRemaining > 0) {
+      const time = convertMs(timeRemaining);
+      daysValue.textContent = addLeadingZero(time.days);
+      hoursValue.textContent = addLeadingZero(time.hours);
+      minutesValue.textContent = addLeadingZero(time.minutes);
+      secondsValue.textContent = addLeadingZero(time.seconds);
+      timeRemaining -= 1000;
+    } else {
       clearInterval(countdownInterval);
+      daysValue.textContent = '00';
+      hoursValue.textContent = '00';
+      minutesValue.textContent = '00';
+      secondsValue.textContent = '00';
       alert('Countdown has finished.');
+      datetimePicker.disabled = false;
+      return;
     }
   }, 1000);
 });
